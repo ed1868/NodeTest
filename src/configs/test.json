@@ -1,0 +1,9 @@
+{
+    "env": "test",
+    "dbConfig": {
+        "host": "localhost",
+        "database": "nodeTest",
+        "port": 27017
+    },
+    "secretKey": "secretKey"
+}

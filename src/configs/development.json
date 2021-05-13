@@ -1,0 +1,9 @@
+{
+    "env": "development",
+    "dbConfig": {
+        "host": "localhost",
+        "database": "eddiesNodeTest",
+        "port": 27017
+    },
+    "secretKey": "secretKey"
+}
