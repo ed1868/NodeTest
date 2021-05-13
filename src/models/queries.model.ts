@@ -7,6 +7,10 @@ const querySchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  encryptedQuery: {
+    type: String,
+    required: true,
+  },
 });
 
 const queryModel = model<Query & Document>('Query', querySchema);
