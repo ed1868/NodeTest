@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateQueryDto } from '@/dtos/queries.dto';
+
 import { Query } from '@interfaces/query.interface';
 
 import queryService from '@services/query.service';
