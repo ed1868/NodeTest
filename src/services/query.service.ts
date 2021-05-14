@@ -15,7 +15,7 @@ class QueryService {
 
   public async createQuery(queryData: CreateQueryDto): Promise<Query> {
     if (isEmpty(queryData)) throw new HttpException(400, 'You need to enter a query');
-    console.log('YOOOO', queryData);
+
     // USUALLY LIKE HAVING AN ENCRYPTED COPY OF DATA (BLOCKCHAIN HABIT)
     const hashedQuery = await bcrypt.hash(queryData.query, 10);
     const createQueryData: Query = await this.queries.create({ ...queryData, encryptedQuery: hashedQuery });
