@@ -10,6 +10,15 @@ const querySchema: Schema = new Schema({
   encryptedQuery: {
     type: String,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  clientId: {
+    type: String,
+  },
 });
 
 const queryModel = model<Query & Document>('Query', querySchema);

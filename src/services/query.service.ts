@@ -16,9 +16,22 @@ class QueryService {
   public async createQuery(queryData: CreateQueryDto): Promise<Query> {
     if (isEmpty(queryData)) throw new HttpException(400, 'You need to enter a query');
 
+    const strRegex = /([0-9A-Z]{8})([0-9A-Z]{10})([0-9]{3})([0-9]{4})/;
+    const parsedResult: any = queryData.query.match(strRegex);
+
+    console.log('THE PARSED RESULT : ', parsedResult);
+
+    const parsedPayload = {
+      query: queryData.query,
+      status: 200,
+      firstName: parsedResult[1],
+      lastName: parsedResult[2],
+      clientId: parsedResult[3] + parsedResult[4],
+    };
+
     // USUALLY LIKE HAVING AN ENCRYPTED COPY OF DATA (BLOCKCHAIN HABIT)
     const hashedQuery = await bcrypt.hash(queryData.query, 10);
-    const createQueryData: Query = await this.queries.create({ ...queryData, encryptedQuery: hashedQuery });
+    const createQueryData: Query = await this.queries.create({ ...parsedPayload, encryptedQuery: hashedQuery });
 
     return createQueryData;
   }
