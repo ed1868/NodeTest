@@ -9,7 +9,7 @@ const querySchema: Schema = new Schema({
   },
   encryptedQuery: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 

@@ -20,6 +20,7 @@ class QueryController {
   };
 
   public createQuery = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('YOU ARE HITTING THE QUERY  CREATE ROUTE');
     try {
       const queryData: CreateQueryDto = req.body;
       const createQueryData: Query = await this.queryService.createQuery(queryData);
