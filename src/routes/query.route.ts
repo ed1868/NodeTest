@@ -16,7 +16,7 @@ class QueryRoute implements Route {
   private initializeRoutes() {
     this.router.get(`${this.path}api/v1/parse/all`, this.queryController.createQuery);
     this.router.post(`${this.path}api/v1/parse`, validationMiddleware(CreateQueryDto, 'body'), this.queryController.createQuery);
-    this.router.post(`${this.path}api/v2/parse`, validationMiddleware(CreateQueryDto, 'body'), this.queryController.createQuery);
+    this.router.post(`${this.path}api/v2/parse`, validationMiddleware(CreateQueryDto, 'body'), this.queryController.createQueryTwo);
   }
 }
 

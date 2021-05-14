@@ -9,7 +9,7 @@ afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
 });
 
-describe('Testing Queries', () => {
+describe('Testing Queries v1 parse 1 ', () => {
   describe('[POST] /api/v1/parse', () => {
     it('response should have parsed and saved query data', async () => {
       const query = 'JOHN0000MICHAEL0009994567';
@@ -44,52 +44,41 @@ describe('Testing Queries', () => {
       return request(app.getServer()).post(`${queryRoute.path}api/v1/parse`).send(queryData);
     });
   });
+});
 
-  //   describe('[POST] /login', () => {
-  //     it('response should have the Set-Cookie header with the Authorization token', async () => {
-  //       const userData: CreateUserDto = {
-  //         email: 'test@email.com',
-  //         password: 'q1w2e3r4!',
-  //       };
+describe('Testing Queries v2 parse 2 ', () => {
+  describe('[POST] /api/v2/parse', () => {
+    it('response should have parsed and saved query data', async () => {
+      const query = 'JOHN0000MICHAEL0009994567';
+      const strRegex = /([0-9A-Z]{8})([0-9A-Z]{10})([0-9]{3})([0-9]{4})/;
+      const parsedResult: any = query.match(strRegex);
 
-  //       const authRoute = new AuthRoute();
-  //       const users = authRoute.authController.authService.users;
+      const queryData: CreateQueryDto = {
+        query: query,
+        status: '200',
+        firstName: parsedResult[1].replace(/0/g, ''),
+        lastName: parsedResult[2].replace(/0/g, ''),
+        clientId: parsedResult[3] + '-' + parsedResult[4],
+        encryptedQuery: await bcrypt.hash('JOHN0000MICHAEL0009994567', 10),
+      };
 
-  //       users.findOne = jest.fn().mockReturnValue({
-  //         _id: '60706478aad6c9ad19a31c84',
-  //         email: userData.email,
-  //         password: await bcrypt.hash(userData.password, 10),
-  //       });
+      const queryRoute = new QueryRoute();
+      const queries = queryRoute.queryController.queryService.queries;
 
-  //       (mongoose as any).connect = jest.fn();
-  //       const app = new App([authRoute]);
-  //       return request(app.getServer())
-  //         .post(`${authRoute.path}login`)
-  //         .send(userData)
-  //         .expect('Set-Cookie', /^Authorization=.+/);
-  //     });
-  //   });
+      queries.find = jest.fn().mockReturnValue(null);
+      queries.create = jest.fn().mockReturnValue({
+        _id: '00212456',
+        query: queryData.query,
+        encryptedQuery: queryData.encryptedQuery,
+        status: queryData.status,
+        firstName: queryData.firstName,
+        lastName: queryData.lastName,
+        clientId: queryData.clientId,
+      });
 
-  // describe('[POST] /logout', () => {
-  //   it('logout Set-Cookie Authorization=; Max-age=0', async () => {
-  //     const userData: User = {
-  //       _id: '60706478aad6c9ad19a31c84',
-  //       email: 'test@email.com',
-  //       password: await bcrypt.hash('q1w2e3r4!', 10),
-  //     };
-
-  //     const authRoute = new AuthRoute();
-  //     const users = authRoute.authController.authService.users;
-
-  //     users.findOne = jest.fn().mockReturnValue(userData);
-
-  //     (mongoose as any).connect = jest.fn();
-  //     const app = new App([authRoute]);
-  //     return request(app.getServer())
-  //       .post(`${authRoute.path}logout`)
-  //       .send(userData)
-  //       .set('Set-Cookie', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ')
-  //       .expect('Set-Cookie', /^Authorization=\; Max-age=0/);
-  //   });
-  // });
+      (mongoose as any).connect = jest.fn();
+      const app = new App([queryRoute]);
+      return request(app.getServer()).post(`${queryRoute.path}api/v2/parse`).send(queryData);
+    });
+  });
 });
