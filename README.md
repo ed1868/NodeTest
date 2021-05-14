@@ -1,8 +1,11 @@
 ## Test assesment Using Nodejs , Express, Mongo/Mongoose , Typescript 
 
 This project has 3 API end points 
+<br>
 GET: api/v1/parse/all
+<br>
 POST : api/v1/parse
+<br>
 POST : api/v2/parse
 
 This project saves each post request the user makes in Mongo as well as encrypts the query to demonstrate security.
