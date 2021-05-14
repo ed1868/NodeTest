@@ -8,6 +8,7 @@ class QueryController {
   public queryService = new queryService();
 
   public getQueries = async (req: Request, res: Response, next: NextFunction) => {
+    console.log('YOU ARE HITTING THE QUERY ROUTE');
     try {
       const findAllQueriesData: Query[] = await this.queryService.findAllQueries();
       res.status(200).json({ data: findAllQueriesData, message: 'I just got all the queries' });
