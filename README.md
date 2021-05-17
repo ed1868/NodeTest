@@ -2,9 +2,12 @@
 
 This project has 3 API end points 
 <br>
+<br>
 GET: api/v1/parse/all
 <br>
+<br>
 POST : api/v1/parse
+<br>
 <br>
 POST : api/v2/parse
 
